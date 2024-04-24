@@ -1,13 +1,13 @@
 import { useContext } from 'react';
 import './SingleProduct.css';
 import { DataContext } from '../../context/DataContext';
-const SingleProduct = ({prod}) => {
-    const {cart,setCart } = useContext(DataContext);
+const SingleProduct = ({ prod }) => {
+    const { cart, setCart } = useContext(DataContext);
     // const { title, description, price, thumbnail } = prod;
 
 
-    const handleAddToCart = () =>{
-        setCart([...cart,prod])
+    const handleAddToCart = () => {
+        setCart([...cart, prod])
     }
 
 
@@ -22,9 +22,18 @@ const SingleProduct = ({prod}) => {
                 {prod?.description}
             </div>
             <div>
-                <button className="add" onClick={handleAddToCart}>
-                    Add to Cart
-                </button>
+                {cart.includes(prod) ? (
+                    <button
+                        className="add remove"
+                        onClick={() => setCart(cart.filter((c) => c.id !== prod.id))}
+                    >
+                        Remove from Cart
+                    </button>
+                ) : (
+                    <button className="add" onClick={() => setCart([...cart, prod])}>
+                        Add to Cart
+                    </button>
+                )}
             </div>
         </div>
     )
